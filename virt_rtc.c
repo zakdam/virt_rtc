@@ -44,13 +44,11 @@ static int virt_rtc_read_time(struct device *dev, struct rtc_time *tm)
 
 		case VIRT_RTC_MODE_FAST:
 			diff_time.tv_sec = diff_time.tv_sec << 1;
-			//rtc_time_to_tm(time + diff_time.tv_sec, tm);
 			rtc_time_to_tm(time + timespec_to_ulong(&diff_time), tm);
 			break;
 
 		case VIRT_RTC_MODE_SLOW:
 			diff_time.tv_sec = diff_time.tv_sec >> 1;
-			//rtc_time_to_tm(time + diff_time.tv_sec, tm);
 			rtc_time_to_tm(time + timespec_to_ulong(&diff_time), tm);
 			break;
 
@@ -64,8 +62,6 @@ static int virt_rtc_read_time(struct device *dev, struct rtc_time *tm)
 	}
 
 	read_time_cnt += 1;
-	//pr_info("read time cnt: %d", read_time_cnt);
-
 	
 	return rtc_valid_tm(tm);
 }
@@ -75,7 +71,6 @@ static int virt_rtc_set_time(struct device *dev, struct rtc_time *tm)
 	getrawmonotonic(&begin_time);
 	rtc_tm_to_time(tm, &time);
 	set_time_cnt += 1;
-	pr_info("set time cnt: %d", set_time_cnt);
 	return 0;
 }
 
